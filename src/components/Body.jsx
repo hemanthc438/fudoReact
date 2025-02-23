@@ -7,18 +7,19 @@ import useRestaurants from "./hooks/useRestaurants"
 import useOnline from "./hooks/useOnline"
 
 const Body = () =>{
-    // let [restaurants,setRestaurants]=useState([])
-    // let [allRestaurants,setAllRestaurants]=useState([])
     let [searchText,setSearchText] = useState("")
-    const {restaurants,allRestaurants,filteredData} = useRestaurants();
+    const {allRestaurants} = useRestaurants();
     const isOnline=useOnline()
+    const [filteredRestaurants,setFilteredRestaurants] = useState([])
+    if(filteredRestaurants.length===0){
+        setFilteredRestaurants(allRestaurants)
+    }
     const filterData=(text,restaurants)=>{
         if(text==''){
-            filteredData=allRestaurants
+            setFilteredRestaurants(allRestaurants)
         }
         else
-        filteredData = restaurants?.filter((restaurant)=>restaurant?.info?.name?.toLowerCase().includes(text.toLowerCase()))
-        return filteredData
+        setFilteredRestaurants(restaurants?.filter((restaurant)=>restaurant?.info?.name?.toLowerCase().includes(text.toLowerCase())))
     }
     if(isOnline===false){
         return (<h1>no internet</h1>)
@@ -31,7 +32,7 @@ const Body = () =>{
             value={searchText}
             onChange={(e)=>{
                 setSearchText(e.target.value)
-                setRestaurants(filterData(e.target.value,allRestaurants))
+                filterData(e.target.value,allRestaurants)
             }}
         />
     <div className="grid grid-cols-4 w-8/10 mx-auto gap-10 overflow-hidden">
@@ -48,12 +49,12 @@ const Body = () =>{
                 value={searchText}
                 onChange={(e)=>{
                     setSearchText(e.target.value)
-                    setRestaurants(filterData(e.target.value,allRestaurants))
+                    filterData(e.target.value,allRestaurants)
                 }}
             />
         <div className="grid grid-cols-4 w-8/10 mx-auto gap-10 overflow-hidden">
             {
-                restaurants?.map((restaurant)=>(
+                filteredRestaurants?.map((restaurant)=>(
                     <Card {...restaurant.info} key={restaurant.info.id}/>
                 ))
             }
