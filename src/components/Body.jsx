@@ -1,18 +1,25 @@
 import Card from "./Card"
-import { restaurantList } from "../../constants"
 import { useEffect, useState } from "react"
 import Schimmer from "./Schimmer"
-import { Footer } from "./Footer"
 import useRestaurants from "./hooks/useRestaurants"
 import useOnline from "./hooks/useOnline"
 
 const Body = () =>{
     let [searchText,setSearchText] = useState("")
-    const {allRestaurants} = useRestaurants();
     const isOnline=useOnline()
     const [filteredRestaurants,setFilteredRestaurants] = useState([])
-    if(filteredRestaurants.length===0){
-        setFilteredRestaurants(allRestaurants)
+    let [restaurants,setRestaurants]=useState([])
+    let [allRestaurants,setAllRestaurants]=useState([])
+    useEffect(()=>{
+        getRestaurants()
+        console.log("res")
+    },[])
+    async function getRestaurants(){
+        const data =await fetch("https://www.swiggy.com/dapi/restaurants/list/v5?lat=12.96340&lng=77.58550&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING")
+        const json = await data.json()
+        setAllRestaurants(json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants)
+        setRestaurants(json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants)
+        setFilteredRestaurants(json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants)
     }
     const filterData=(text,restaurants)=>{
         if(text==''){
