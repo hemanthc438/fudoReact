@@ -17,6 +17,7 @@
     "@parcel/core": "^2.13.3",
     "@parcel/diagnostic": "^2.13.3",
     "@tailwindcss/postcss": "^4.0.8",
+    "autoprefixer": "^10.4.20",
     "babel-plugin-transform-remove-console": "^6.9.4",
     "parcel": "^2.13.3",
     "postcss": "^8.5.3",

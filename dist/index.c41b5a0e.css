@@ -596,10 +596,6 @@
     width: var(--container-4xl);
   }
 
-  .w-5 {
-    width: calc(var(--spacing) * 5);
-  }
-
   .w-5\/10 {
     width: 50%;
   }
