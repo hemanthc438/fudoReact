@@ -9,8 +9,7 @@ class About extends Component{
     }
     render(){
         return (
-            <div className="flex h-screen">
-                <h1>ABOUT</h1>
+            <div className="flex m-10">
                 <Outlet/>
             </div>
         )
