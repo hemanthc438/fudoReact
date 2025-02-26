@@ -1,4 +1,4 @@
-import React, { lazy , Suspense } from "react"
+import React, { lazy , Suspense, useState } from "react"
 import ReactDOM from 'react-dom/client'
 import '../index.css'
 import { Header } from "./components/Header"
@@ -11,15 +11,27 @@ import ErrorPage from "./components/ErrorPage"
 import Restaurant from "./components/Restaurant"
 import Profile from "./components/Profile"
 import Schimmer from "./components/Schimmer"
+import useContent from "./components/hooks/useContent"
+import Login from "./components/Login"
 const Contact = lazy(()=>import('./components/Contact'))
 const About = lazy(()=>import('./components/About'))
-    const Page = () =>(
+    const Page = () =>{
+        const [user,setUser] = useState({
+            user:{
+                name:"Hemanth",
+                email:"hemanthc438@gmail.com"
+            }
+        })
+        return (
         <div className="bg-neutral-100">
-            <Header/>
-            <Outlet/>
-            <Footer/>
+            <useContent.Provider value={{user:user,setUser:setUser}}>
+                <Header/>
+                <Outlet/>
+                <Footer/>
+            </useContent.Provider>
         </div>
     )
+}
     const appRouter = createBrowserRouter([
         {
             path:"/",
@@ -41,6 +53,9 @@ const About = lazy(()=>import('./components/About'))
             },{
                 path:'/restaurant/:id',
                 element:<Restaurant/>
+            },{
+                path:'/login',
+                element:<Login/>
             }]
         }
     ]);

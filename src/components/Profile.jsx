@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState , useContext } from 'react'
 import { FaChevronDown ,FaChevronUp } from "react-icons/fa";
+import useContent from './hooks/useContent';
 const RepoCard = ({repoDetails,isVisible,setIsVisible}) =>{
     return (
         <div className='flex flex-col w-full border-b border-neutral-400 '>
@@ -27,6 +28,7 @@ const Profile = () =>{
     const [userData,setUserData] = useState([])
     const [repos,setRepos] = useState([])
     const [isVisibleRepo,setIsVisibleRepo] = useState(null)
+    const { user , setUser } = useContext(useContent)
     useEffect(()=>{
         getProfileInfo();
         getRepos()
@@ -51,6 +53,14 @@ const Profile = () =>{
                 <div className='flex flex-col col-span-2'>
                     <img className='mt-10 w-50 h-50 rounded-full' src={userData?.avatar_url}/>
                     <p className='text-center text-2xl m-2 font-bold'>{userData?.name}</p>
+                    <h1 className='m-2 text-xl font-bold'>{user?.name}</h1>
+                    <input 
+                        value={user?.name}
+                        onChange={e=>setUser({
+                            ...user,
+                            name:e.target.value,
+                        })}
+                    ></input>
                 </div>
                 <div className='flex flex-col m-10 col-span-10'>
                     <h1 className='text-4xl font-bold m-2'>REPOSITORIES</h1>
