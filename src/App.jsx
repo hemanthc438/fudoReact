@@ -13,6 +13,9 @@ import Profile from "./components/Profile"
 import Schimmer from "./components/Schimmer"
 import useContent from "./components/hooks/useContent"
 import Login from "./components/Login"
+import store from './components/hooks/store'
+import { Provider } from "react-redux"
+import Cart from "./components/Cart"
 const Contact = lazy(()=>import('./components/Contact'))
 const About = lazy(()=>import('./components/About'))
     const Page = () =>{
@@ -24,11 +27,13 @@ const About = lazy(()=>import('./components/About'))
         })
         return (
         <div className="bg-neutral-100">
-            <useContent.Provider value={{user:user,setUser:setUser}}>
-                <Header/>
-                <Outlet/>
-                <Footer/>
-            </useContent.Provider>
+            <Provider store={store}>
+                <useContent.Provider value={{user:user,setUser:setUser}}>
+                    <Header/>
+                    <Outlet/>
+                    <Footer/>
+                </useContent.Provider>
+            </Provider>
         </div>
     )
 }
@@ -56,6 +61,9 @@ const About = lazy(()=>import('./components/About'))
             },{
                 path:'/login',
                 element:<Login/>
+            },{
+                path:'/cart',
+                element:<Cart/>
             }]
         }
     ]);

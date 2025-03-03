@@ -1,7 +1,14 @@
+import { useDispatch } from "react-redux";
 import { URL_PRE, URL_PRE_ITEM } from "../../constants";
+import { addItem } from "./hooks/cartSlice";
 
 const MenuItem = ({params}) => {
-    const item = params?.card?.info
+    const item = params?.card?.info ? params?.card?.info : params
+    const dispatch = useDispatch()
+
+    const handleAddToCart = () =>{
+        dispatch(addItem(item))
+    }
     return (
         <div className="grid grid-cols-10 p-5 pb-8 border-b border-b-neutral-300">
             <div className="flex col-span-7 flex-col  ">
@@ -15,7 +22,9 @@ const MenuItem = ({params}) => {
             </div>
             <div className=" col-span-3 ml-20 mb-5 w-35 h-35 ">
                 <img className="justify-end rounded-2xl w-full shadow-sm" src={URL_PRE_ITEM+item?.imageId}></img>
-                <button className="mt-[-10px] ml-5 p-1 bg-white cursor-pointer rounded-2xl border border-neutral-300 text-green-500 font-bold w-25 h-10">ADD</button>
+                <button 
+                    onClick={()=>handleAddToCart()}
+                    className="mt-[-10px] ml-5 p-1 bg-white cursor-pointer rounded-2xl border border-neutral-300 text-green-500 font-bold w-25 h-10">ADD</button>
             </div>
         </div>
     )
