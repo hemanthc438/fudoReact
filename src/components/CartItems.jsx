@@ -2,21 +2,23 @@ import { useDispatch, useSelector } from "react-redux";
 import { URL_PRE, URL_PRE_ITEM } from "../../constants";
 import { addItem, removeItem } from "./hooks/cartSlice";
 
-const MenuItem = ({params}) => {
-    const item = params?.card?.info ? params?.card?.info : params
-    const dispatch = useDispatch()
+const CartItems = ({params}) => {
+    const showItem = params?.card?.info ? params?.card?.info : params
     const cartItems = useSelector((store)=>store.cart.items)
-    const len = cartItems.filter((cartItem)=>{
-        const showItem = cartItem[1]?cartItem[1]:cartItem
-        if(showItem.id == item.id)
-            return showItem
+    const len = showItem[1]? showItem[0].length + 1 : 1
+    const item = showItem[1]?showItem[1]:showItem[0]
+    const filteredItem = cartItems.filter((cartItem)=>{
+        if(cartItem.id === item.id)
+            return cartItem
     })
+    const dispatch = useDispatch()
+
     const handleAddToCart = () =>{
         dispatch(addItem(item))
     }
     const handleRemoveItem = () =>{
-            dispatch(removeItem(item.id))
-        }
+        dispatch(removeItem(item.id))
+    }
     return (
         <div className="grid grid-cols-10 p-5 pb-8 border-b border-b-neutral-300">
             <div className="flex col-span-7 flex-col  ">
@@ -30,12 +32,6 @@ const MenuItem = ({params}) => {
             </div>
             <div className="relative col-span-3 ml-20 mb-5 w-35 h-35 ">
                 <img className="justify-end rounded-2xl w-full shadow-sm" src={URL_PRE_ITEM+item?.imageId}></img>
-                {
-                    len.length===0?(
-                        <button 
-                            onClick={()=>handleAddToCart()}
-                            className=" mt-[-10px] ml-5 p-1 bg-white cursor-pointer rounded-2xl border border-neutral-300 text-green-500 font-bold w-25 h-10">ADD</button>
-                    ):(
                     <div className="absolute grid grid-cols-3 mt-[-10px] ml-5 p-1 bg-white cursor-pointer rounded-2xl border border-neutral-300 text-green-500 font-bold w-25 h-10">
                         <h1 
                             onClick={()=>handleRemoveItem()}
@@ -43,18 +39,15 @@ const MenuItem = ({params}) => {
                             -
                         </h1>
                         <h1 
-                            className="text-center">{len.length}
+                            className="text-center">{filteredItem.length}
                         </h1>
                         <h1 
                             onClick={()=>handleAddToCart()}
                             className="pr-1 font-bold text-right text-green-500">+
                         </h1>
                     </div>
-                    )
-                }
-                
             </div>
         </div>
     )
 }
-export default MenuItem;
+export default CartItems;

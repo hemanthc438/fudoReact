@@ -15,8 +15,9 @@ export const Header = () => {
                     <li className=' hover:text-orange-600'><Link to={'/'}>Home</Link></li>
                     <li className=' hover:text-orange-600'><Link to={'/about/profile'}>About</Link></li>
                     <li className=' hover:text-orange-600'><Link to={'/contact'}>Contact</Link></li>
-                    <l1 className=' hover:text-orange-600'><Link to='/login'>Login</Link></l1>
-                    <li className=' hover:text-orange-600'><Link to={'/cart'} state={cartItems}>
+                    <li className=' hover:text-orange-600'><Link to='/login'>Login</Link></li>
+                    <li className=' hover:text-orange-600'><Link to={'/cart'} 
+                        state={cartItems}>
                         <span className='pl-2 pr-2 mr-1 rounded bg-green-600 text-white font-bold'>
                             {cartItems.length}</span>Cart</Link>
                     </li>
