@@ -18,7 +18,7 @@ const Cart = () => {
         )
     }
     return (
-        <div className="flex flex-col w-3xl h-auto pt-10 mx-auto ">
+        <div className="flex flex-col w-3xl h-screen pt-10 mx-auto ">
             <h1 className="font-bold text-3xl self-center">CART</h1>
             {
                 Object.values(reduce).map((item,index)=>(

@@ -20,6 +20,14 @@ const Login = () =>{
                     onChange={e=>{setPassword(e.target.value)}}
                     className="h-10 m-3 p-2 bg-white rounded border border-neutral-300"
                 ></input>
+                <div className="m-3">
+                    <button 
+                        className="w-full rounded text-white text-2xl font-bold bg-orange-600 "
+                    >Login</button>
+                    <p
+                        className="text-sm text-indigo-600 text-right"
+                    >forgot password?</p>
+                </div>
             </div>
         </div>
     )
